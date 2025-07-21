@@ -8,7 +8,7 @@ import {
   getTodos,
   createTodo,
   deleteTodo,
-  updateTodo,
+  updateTodo
 } from './api/todos';
 
 enum ErrorMessage {

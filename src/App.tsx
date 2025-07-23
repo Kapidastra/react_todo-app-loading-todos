@@ -49,6 +49,8 @@ export const App: React.FC = () => {
 
       return () => clearTimeout(timer);
     }
+
+    return;
   }, [errorMessage]);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export const App: React.FC = () => {
 
     if (completedTodos.length === 0) {
       return;
-    } // кнопка буде вимкнена, але на всяк випадок
+    }
 
     Promise.all(completedTodos.map(todo => deleteTodo(todo.id)))
       .then(() => {

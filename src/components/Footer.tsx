@@ -1,6 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
+import { FilterType } from '../constants/constants';
 
-type FilterType = 'all' | 'active' | 'completed';
+const FILTER_LABELS: Record<FilterType, string> = {
+  [FilterType.All]: 'All',
+  [FilterType.Active]: 'Active',
+  [FilterType.Completed]: 'Completed',
+};
 
 interface Props {
   todosCount: number;
@@ -24,37 +30,26 @@ export const Footer: React.FC<Props> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={`filter__link ${filterBy === 'all' ? 'selected' : ''}`}
-          data-cy="FilterLinkAll"
-          onClick={() => setFilterBy('all')}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={`filter__link ${filterBy === 'active' ? 'selected' : ''}`}
-          data-cy="FilterLinkActive"
-          onClick={() => setFilterBy('active')}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={`filter__link ${filterBy === 'completed' ? 'selected' : ''}`}
-          data-cy="FilterLinkCompleted"
-          onClick={() => setFilterBy('completed')}
-        >
-          Completed
-        </a>
+        {Object.values(FilterType).map(type => (
+          <a
+            key={type}
+            href={`#/${type === FilterType.All ? '' : type}`}
+            className={classNames('filter__link', {
+              selected: filterBy === type,
+            })}
+            data-cy={`FilterLink${type[0].toUpperCase()}${type.slice(1)}`}
+            onClick={() => setFilterBy(type)}
+          >
+            {FILTER_LABELS[type]}
+          </a>
+        ))}
       </nav>
 
       <button
         type="button"
-        className={`todoapp__clear-completed ${!hasCompleted ? 'hidden' : ''}`}
+        className={classNames('todoapp__clear-completed', {
+          hidden: !hasCompleted,
+        })}
         data-cy="ClearCompletedButton"
         onClick={handleClearCompleted}
       >

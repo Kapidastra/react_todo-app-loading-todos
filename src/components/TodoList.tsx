@@ -1,7 +1,9 @@
 import React from 'react';
 import { Todo } from '../types/Todo';
+import { TodoItem } from './TodoItem';
+import classNames from 'classnames';
 
-interface TodoListProps {
+interface Props {
   todos: Todo[];
   onToggle: (todo: Todo) => void;
   onDelete: (id: number) => void;
@@ -10,7 +12,7 @@ interface TodoListProps {
   isTogglingAll: boolean;
 }
 
-export const TodoList: React.FC<TodoListProps> = ({
+export const TodoList: React.FC<Props> = ({
   todos,
   onToggle,
   onDelete,
@@ -20,57 +22,30 @@ export const TodoList: React.FC<TodoListProps> = ({
 }) => (
   <section className="todoapp__main" data-cy="TodoList">
     {todos.map(todo => (
-      <div
+      <TodoItem
         key={todo.id}
-        data-cy="Todo"
-        className={`todo ${todo.completed ? 'completed' : ''}`}
-      >
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="todo__status-label">
-          <input
-            data-cy="TodoStatus"
-            type="checkbox"
-            className="todo__status"
-            checked={todo.completed}
-            onChange={() => onToggle(todo)}
-          />
-        </label>
-
-        <span data-cy="TodoTitle" className="todo__title">
-          {todo.title}
-        </span>
-
-        <button
-          type="button"
-          className="todo__remove"
-          data-cy="TodoDelete"
-          onClick={() => onDelete(todo.id)}
-          disabled={processingTodoId === todo.id}
-        >
-          ×
-        </button>
-
-        <div
-          data-cy="TodoLoader"
-          className={`modal overlay ${processingTodoId === todo.id ? 'is-active' : ''}`}
-        >
-          <div className="modal-background has-background-white-ter" />
-          <div className="loader" />
-        </div>
-      </div>
+        todo={todo}
+        onToggle={onToggle}
+        onDelete={onDelete}
+        processing={processingTodoId === todo.id}
+      />
     ))}
 
     {tempTodo && (
       <div data-cy="Todo" className="todo">
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor={`temp-todo`} className="todo__status-label">
+        <label
+          htmlFor={`temp-todo-${tempTodo.id}`}
+          className="todo__status-label"
+        >
           <input
+            id={`temp-todo-${tempTodo.id}`}
             data-cy="TodoStatus"
             type="checkbox"
             className="todo__status"
             checked={tempTodo.completed}
-            onChange={() => {}}
             disabled
+            onChange={() => {}}
           />
         </label>
 
@@ -82,7 +57,6 @@ export const TodoList: React.FC<TodoListProps> = ({
           type="button"
           className="todo__remove"
           data-cy="TodoDelete"
-          onClick={() => {}}
           disabled
         >
           ×
@@ -97,7 +71,7 @@ export const TodoList: React.FC<TodoListProps> = ({
 
     <div
       data-cy="TodoLoader"
-      className={`modal overlay ${isTogglingAll ? 'is-active' : ''}`}
+      className={classNames('modal', 'overlay', { 'is-active': isTogglingAll })}
     >
       <div className="modal-background has-background-white-ter" />
       <div className="loader" />

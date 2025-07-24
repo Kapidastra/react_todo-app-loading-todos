@@ -54,10 +54,10 @@ export const App: React.FC = () => {
   }, [errorMessage]);
 
   useEffect(() => {
-    if (newTodoField.current) {
+    if (newTodoField.current && !loading) {
       newTodoField.current.focus();
     }
-  }, [todos.length]);
+  }, [todos.length, loading]);
 
   if (!USER_ID) {
     return <UserWarning />;
@@ -139,7 +139,6 @@ export const App: React.FC = () => {
       })
       .catch(() => {
         setErrorMessage(ErrorMessage.Add);
-        newTodoField.current?.focus();
       })
       .finally(() => {
         setLoading(false);

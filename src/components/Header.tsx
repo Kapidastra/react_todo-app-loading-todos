@@ -40,11 +40,12 @@ export const Header: React.FC<HeaderProps> = ({
         ref={inputRef}
         type="text"
         className="new-todo"
+        data-cy="NewTodoField"
         placeholder="What needs to be done?"
         value={newTitle}
         onChange={e => setNewTitle(e.target.value)}
         disabled={loading}
-        data-cy="NewTodoField"
+        autoFocus
       />
     </form>
   </header>

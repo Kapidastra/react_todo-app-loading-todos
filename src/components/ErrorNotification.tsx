@@ -7,10 +7,6 @@ interface Props {
 }
 
 export const ErrorNotification: React.FC<Props> = ({ message, onClose }) => {
-  if (!message) {
-    return null;
-  }
-
   return (
     <div
       data-cy="ErrorNotification"
@@ -19,16 +15,18 @@ export const ErrorNotification: React.FC<Props> = ({ message, onClose }) => {
         'is-danger',
         'is-light',
         'has-text-weight-normal',
-        'is-visible',
+        {
+          hidden: !message,
+        },
       )}
     >
       <button
         className="delete"
         onClick={onClose}
         aria-label="close"
-        data-cy="CloseErrorNotification"
+        data-cy="HideErrorButton"
       />
-      {message}
+      {message || ''}
     </div>
   );
 };

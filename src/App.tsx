@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect, useRef } from 'react';
 import { UserWarning } from './UserWarning';
+import { ErrorMessage } from './types/ErrorMessage';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { TodoList } from './components/TodoList';
@@ -15,14 +16,6 @@ import {
   updateTodo,
 } from './api/todos';
 import { FilterType } from './constants/constants';
-
-enum ErrorMessage {
-  Load = 'Unable to load todos',
-  Add = 'Unable to add a todo',
-  Delete = 'Unable to delete a todo',
-  Update = 'Unable to update a todo',
-  Title = 'Title should not be empty',
-}
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -126,7 +119,7 @@ export const App: React.FC = () => {
 
     setLoading(true);
     setTempTodo({
-      id: -Date.now(), // унікальний негативний id тимчасово
+      id: -Date.now(),
       userId: USER_ID,
       title: trimmedTitle,
       completed: false,
@@ -157,6 +150,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="todoapp">
+      <h1 className="todoapp__title">todos</h1>
       <Header
         title="todos"
         newTitle={title}

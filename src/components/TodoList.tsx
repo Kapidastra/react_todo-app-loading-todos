@@ -13,13 +13,13 @@ interface Props {
 }
 
 export const TodoList: React.FC<Props> = ({
-                                            todos,
-                                            onToggle,
-                                            onDelete,
-                                            processingTodoId,
-                                            tempTodo,
-                                            isTogglingAll,
-                                          }) => {
+  todos,
+  onToggle,
+  onDelete,
+  processingTodoId,
+  tempTodo,
+  isTogglingAll,
+}) => {
   // ⛔ Не рендерити секцію, якщо повністю порожня
   if (todos.length === 0 && !tempTodo && !isTogglingAll) {
     return null;

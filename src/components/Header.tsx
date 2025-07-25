@@ -14,7 +14,6 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  title,
   newTitle,
   setNewTitle,
   onSubmit,
@@ -24,18 +23,15 @@ export const Header: React.FC<HeaderProps> = ({
   handleToggleAll,
 }) => (
   <header className="todoapp__header">
-    <h1 className="todoapp__title">{title}</h1>
     {todos.length > 0 && (
-      <label className="todo__status-label" htmlFor="toggle-all">
-        <button
-          id="toggle-all"
-          type="button"
-          className="todoapp__toggle-all active"
-          onClick={handleToggleAll}
-          aria-label="Toggle all todos"
-          data-cy="ToggleAllButton"
-        />
-      </label>
+      <button
+        id="toggle-all"
+        type="button"
+        className="todoapp__toggle-all"
+        onClick={handleToggleAll}
+        aria-label="Toggle all todos"
+        data-cy="ToggleAllButton"
+      />
     )}
 
     <form onSubmit={onSubmit}>
